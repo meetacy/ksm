@@ -1,0 +1,35 @@
+[versions]
+
+kotlin = "1.9.23"
+kotlinx-coroutines = "1.8.0"
+kotlinx-serialization = "1.6.3"
+android-gradle = "7.3.1"
+compose-runtime = "1.6.5"
+compose-compiler = "1.5.11"
+androidx-navigation = "2.7.7"
+androidx-lifecycle = "2.7.0"
+ktgbotapi = "11.0.0"
+mdi = "0.0.37"
+
+ksm = "0.0.12"
+
+[libraries]
+
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-runtime" }
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose-runtime" }
+compose-runtime-saveable = { module = "androidx.compose.runtime:runtime-saveable", version.ref = "compose-runtime" }
+androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+
+ktgbotapi = { module = "dev.inmo:tgbotapi", version.ref = "ktgbotapi" }
+
+mdi = { module = "app.meetacy.di:core", version.ref = "mdi" }
+
+# gradle plugins
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlinx-serialization-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
