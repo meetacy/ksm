@@ -21,7 +21,8 @@ internal class BaseSerializationStateController(
 
     @Suppress("UNCHECKED_CAST")
     fun restore(root: StateContext) {
-        val serializedStack = format.decode(serializedStackType) as SerializedStackType
+        val serializedStack = format.decode(serializedStackType) ?: return
+        serializedStack as SerializedStackType
         var current = root
         for (serializedEntry in serializedStack) {
             current = decodeEntry(current, serializedEntry.data)
