@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ksm.StateController
 import ksm.navigation.compose.Content
-import ksm.navigation.compose.host.NavigationHost
+import ksm.navigation.compose.host.NavigationStateHost
 import ksm.navigation.compose.rememberStateController
 import ksm.navigation.state.builder.StateRouteScope
 import ksm.navigation.state.builder.states
@@ -38,7 +38,7 @@ private fun AppContent() {
         }
     }
 
-    NavigationHost(
+    NavigationStateHost(
         controller = controller,
         startStateName = MAIN_SCREEN
     )

@@ -12,7 +12,7 @@ import ksm.navigation.state.navigate
 import ksm.plugin.plugin
 
 @Composable
-public fun NavigationHost(
+public fun NavigationStateHost(
     controller: StateController,
     startStateName: String
 ) {
