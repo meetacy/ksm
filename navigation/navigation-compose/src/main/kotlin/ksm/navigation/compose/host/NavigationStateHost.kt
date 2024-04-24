@@ -16,7 +16,7 @@ import ksm.plugin.plugin
 public fun NavigationStateHost(
     controller: StateController,
     startStateName: String,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Box(modifier) {
         val currentContext = remember(controller) {
