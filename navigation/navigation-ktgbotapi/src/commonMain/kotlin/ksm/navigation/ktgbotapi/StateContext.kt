@@ -4,8 +4,8 @@ import dev.inmo.tgbotapi.bot.TelegramBot
 import dev.inmo.tgbotapi.types.message.abstracts.Message
 import dev.inmo.tgbotapi.types.update.MessageUpdate
 import dev.inmo.tgbotapi.types.update.abstracts.Update
+import ksm.StateController
 import ksm.context.StateContext
-import ksm.navigation.state.StateScope
 import ksm.navigation.ktgbotapi.plugin.TelegramBotApiPlugin
 import ksm.plugin.plugin
 
@@ -31,11 +31,11 @@ public val StateContext.telegramBot: TelegramBot get() {
     return plugin(TelegramBotApiPlugin).telegramBot
 }
 
-internal val StateContext.executeBlock: suspend StateScope.() -> Unit get() {
+internal val StateContext.executeBlock: suspend StateController.() -> Unit get() {
     return plugin(TelegramBotApiPlugin).executeBlock(context = this)
 }
 
-public fun StateContext.setExecuteBlock(block: suspend StateScope.() -> Unit) {
+public fun StateContext.setExecuteBlock(block: suspend StateController.() -> Unit) {
     plugin(TelegramBotApiPlugin).setExecuteBlock(
         context = this,
         block = block

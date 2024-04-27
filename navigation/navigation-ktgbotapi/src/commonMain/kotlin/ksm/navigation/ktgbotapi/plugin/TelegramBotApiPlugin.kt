@@ -2,11 +2,11 @@ package ksm.navigation.ktgbotapi.plugin
 
 import dev.inmo.tgbotapi.bot.TelegramBot
 import dev.inmo.tgbotapi.types.update.abstracts.Update
+import ksm.StateController
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
 import ksm.context.configuration.interceptor.ConfigurationInterceptor
 import ksm.context.configuration.interceptor.addConfigurationInterceptor
-import ksm.navigation.state.StateScope
 import ksm.navigation.ktgbotapi.TelegramPeerKey
 import ksm.plugin.Plugin
 
@@ -32,12 +32,12 @@ public class TelegramBotApiPlugin(
 
     public fun setExecuteBlock(
         context: StateContext,
-        block: suspend StateScope.() -> Unit
+        block: suspend StateController.() -> Unit
     ) {
         context.require(TelegramBotEntry).execute = block
     }
 
-    public fun executeBlock(context: StateContext): suspend StateScope.() -> Unit {
+    public fun executeBlock(context: StateContext): suspend StateController.() -> Unit {
         return context.require(TelegramBotEntry).execute
             ?: error("Please invoke `execute` in StateBuilder")
     }

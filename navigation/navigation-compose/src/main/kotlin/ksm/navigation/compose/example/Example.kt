@@ -52,7 +52,7 @@ private fun StateController.registerDetailsNavigator(
 
 private fun StateRouteScope.main() = named(MAIN_SCREEN) {
     Content {
-        val launcher = controller.registerDetailsNavigator { itemName ->
+        val launcher = registerDetailsNavigator { itemName ->
             println("Item Picked! $itemName")
         }
 
@@ -64,9 +64,9 @@ private fun StateRouteScope.main() = named(MAIN_SCREEN) {
 
 private fun StateRouteScope.details() = named(DETAILS_SCREEN) {
     Content {
-        val parameters: DetailsParameters = controller.receive()
+        val parameters: DetailsParameters = receive()
 
         // somewhere in actions handler
-        controller.finishWithResult("ItemName[${parameters.itemId}]")
+        finishWithResult("ItemName[${parameters.itemId}]")
     }
 }

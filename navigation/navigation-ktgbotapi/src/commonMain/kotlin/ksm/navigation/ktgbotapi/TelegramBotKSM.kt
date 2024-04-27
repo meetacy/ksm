@@ -7,7 +7,6 @@ import ksm.StateController
 import ksm.annotation.LibraryConstructor
 import ksm.asStateController
 import ksm.builder.StateControllerBuilder
-import ksm.navigation.state.StateScope
 import ksm.navigation.state.navigate
 import ksm.navigation.ktgbotapi.plugin.TelegramBotApiPlugin
 import ksm.navigation.navigationStateController
@@ -36,8 +35,7 @@ public class TelegramBotStateMachine(
             //  выполнение цепочки, можно сделать декоратор
             val lastContext = controller.context.lastContext
             val lastController = lastContext.asStateController()
-            val stateScope = StateScope(lastController)
-            lastContext.executeBlock.invoke(stateScope)
+            lastContext.executeBlock.invoke(lastController)
         }
     }
 

@@ -9,34 +9,34 @@ import dev.inmo.tgbotapi.types.buttons.KeyboardMarkup
 import dev.inmo.tgbotapi.types.chat.User
 import dev.inmo.tgbotapi.types.update.abstracts.Update
 import dev.inmo.tgbotapi.utils.PreviewFeature
-import ksm.navigation.state.StateScope
+import ksm.StateController
 import ksm.navigation.ktgbotapi.match.MatchScope
 
-public val StateScope.update: Update get() {
-    return controller.context.update
+public val StateController.update: Update get() {
+    return context.update
 }
 
 @OptIn(PreviewFeature::class)
-public val StateScope.user: User get() {
+public val StateController.user: User get() {
     return update.sourceUser() ?: error("Cannot get user from $update")
 }
 
 @OptIn(PreviewFeature::class)
-public val StateScope.chatId: IdChatIdentifier get() {
+public val StateController.chatId: IdChatIdentifier get() {
     return update.sourceChat()?.id ?: error("Cannot get chatId from $update")
 }
 
-public val StateScope.telegramBot: TelegramBot get() {
-    return controller.context.telegramBot
+public val StateController.telegramBot: TelegramBot get() {
+    return context.telegramBot
 }
 
-public suspend fun StateScope.sendMessage(
+public suspend fun StateController.sendMessage(
     text: String,
     replyMarkup: KeyboardMarkup? = null
 ) {
     telegramBot.sendMessage(chatId, text, replyMarkup = replyMarkup)
 }
 
-public inline fun StateScope.matchMessage(block: MatchScope.() -> Unit) {
-    MatchScope(controller.context).apply(block)
+public inline fun StateController.matchMessage(block: MatchScope.() -> Unit) {
+    MatchScope(context).apply(block)
 }

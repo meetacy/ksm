@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import ksm.StateController
 import ksm.asStateController
 import ksm.navigation.compose.plugin.ComposePlugin
-import ksm.navigation.state.StateScope
 import ksm.navigation.state.navigate
 import ksm.plugin.plugin
 
@@ -27,9 +26,8 @@ public fun NavigationStateHost(
         key(currentContext) {
             currentContext ?: return
             val childController = currentContext.asStateController()
-            val contentScope = StateScope(childController)
             val content = currentContext.plugin(ComposePlugin).content(currentContext)
-            content?.invoke(contentScope)
+            content?.invoke(childController)
         }
     }
 }

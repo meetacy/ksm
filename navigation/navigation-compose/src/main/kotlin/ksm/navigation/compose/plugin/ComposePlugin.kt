@@ -2,13 +2,13 @@ package ksm.navigation.compose.plugin
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import ksm.StateController
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
 import ksm.context.configuration.interceptor.ConfigurationInterceptor
 import ksm.context.configuration.interceptor.addConfigurationInterceptor
 import ksm.lifecycle.LifecycleInterceptor
 import ksm.lifecycle.addLifecycleInterceptor
-import ksm.navigation.state.StateScope
 import ksm.navigation.serialization.BaseSerializationStore
 import ksm.plugin.Plugin
 
@@ -42,12 +42,12 @@ public class ComposePlugin(
 
     internal fun setContent(
         context: StateContext,
-        content: @Composable StateScope.() -> Unit
+        content: @Composable StateController.() -> Unit
     ) {
         context.require(ComposeEntry).content = content
     }
 
-    internal fun content(context: StateContext): (@Composable StateScope.() -> Unit)? {
+    internal fun content(context: StateContext): (@Composable StateController.() -> Unit)? {
         return context.require(ComposeEntry).content
     }
 
