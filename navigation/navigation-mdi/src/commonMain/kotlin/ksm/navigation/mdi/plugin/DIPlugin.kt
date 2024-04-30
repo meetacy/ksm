@@ -1,8 +1,8 @@
 package ksm.navigation.mdi.plugin
 
 import app.meetacy.di.DI
+import app.meetacy.di.builder.DIBuilder
 import app.meetacy.di.builder.di
-import ksm.pluginStateController
 import ksm.annotation.MutateContext
 import ksm.asStateController
 import ksm.context.StateContext
@@ -12,35 +12,49 @@ import ksm.context.configuration.interceptor.addConfigurationInterceptor
 import ksm.lifecycle.LifecycleInterceptor
 import ksm.lifecycle.addLifecycleInterceptor
 
-public class DIPlugin(private val root: DI) : Plugin {
+public class DIPlugin(
+    private val root: DI = di { },
+    private val checkDependencies: Boolean = true,
+    private val perStateDI: DIBuilder.() -> Unit = {}
+) : Plugin {
     override val key: Companion = DIPlugin
 
     @MutateContext
     override fun install(context: StateContext): StateContext {
         context.addConfigurationInterceptor(Configuration())
-        return context + DIEntry(root)
+        val di = di(
+            di = root,
+            checkDependencies = checkDependencies,
+            block = perStateDI
+        )
+        return context + DIEntry(di)
     }
 
     private inner class Configuration : ConfigurationInterceptor {
         @MutateContext
         override fun onConfigure(context: StateContext): StateContext {
-            val entry = DIEntry(root)
-            context.addLifecycleInterceptor(Lifecycle(entry))
-            return context + entry
+            context.addLifecycleInterceptor(Lifecycle())
+            val di = di(
+                di = root,
+                checkDependencies = checkDependencies,
+                block = perStateDI
+            )
+            return context + DIEntry(di)
         }
     }
 
-    private inner class Lifecycle(val entry: DIEntry) : LifecycleInterceptor {
-        override fun onFinish(context: StateContext) {
-            entry.setDI(null)
+    private inner class Lifecycle : LifecycleInterceptor {
+        override fun onCreate(context: StateContext) {
+            val entry = context.require(DIEntry)
+            val controllerDI = di {
+                val stateController by constant(context.asStateController())
+            }
+            entry.setDI(di = entry.getDI()?.plus(controllerDI))
         }
     }
 
     public fun di(context: StateContext): DI {
-        val base = context.require(DIEntry).getDI() ?: error("DI is not initialized")
-        return base + di {
-            val stateController by constant(context.asStateController())
-        }
+        return context.require(DIEntry).getDI() ?: error("DI is not initialized")
     }
 
     public fun setDI(context: StateContext, di: DI) {
