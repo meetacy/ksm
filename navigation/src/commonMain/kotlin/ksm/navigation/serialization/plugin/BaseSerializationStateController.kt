@@ -51,7 +51,7 @@ internal class BaseSerializationStateController(
                 index = 0,
                 element = encodedEntry
             )
-            current = context.previousContextOrNull
+            current = current.previousContextOrNull
         }
 
         val value = TypedValue.of(serializedStack.toList())
