@@ -24,7 +24,7 @@ internal class KotlinxSerializationFormat(
 
     override fun encode(value: TypedValue) {
         val serializer = json.serializersModule.serializer(value.type)
-        store.apply(json.encodeToString(serializer, value))
+        store.apply(json.encodeToString(serializer, value.data))
     }
 
     override fun decode(): TypedValue.Generic? {
