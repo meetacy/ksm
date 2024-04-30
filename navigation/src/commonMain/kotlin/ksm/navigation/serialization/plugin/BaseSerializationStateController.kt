@@ -62,7 +62,7 @@ internal class BaseSerializationStateController(
         context: StateContext,
         entry: BaseSerializationParametersInterceptor
     ): TypedValue {
-        val name = STATE_NAME_KEY to TypedValue.Generic.of(context.name)
+        val name = STATE_NAME_KEY to TypedValue.of(context.name)
         val map = entry.toMap() + name
         return TypedValue.of(map)
     }

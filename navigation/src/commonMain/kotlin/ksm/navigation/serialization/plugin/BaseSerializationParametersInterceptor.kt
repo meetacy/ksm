@@ -4,12 +4,16 @@ import ksm.navigation.state.parameters.interceptor.ParametersInterceptor
 import ksm.typed.TypedValue
 
 internal class BaseSerializationParametersInterceptor : ParametersInterceptor {
-    private val map = mutableMapOf<String, TypedValue.Generic>()
+    private val map = mutableMapOf<String, TypedValue>()
 
     override fun onPut(
         key: String,
         value: TypedValue
-    ) { map[key] = TypedValue.Generic.of(value) }
-    override fun onReceive(key: String): TypedValue.Generic? = map[key]
-    fun toMap(): Map<String, TypedValue.Generic> = map
+    ) { map[key] = value }
+
+    override fun onReceive(key: String): TypedValue.Generic? {
+        return map[key]?.let { value -> TypedValue.Generic.of(value) }
+    }
+
+    fun toMap(): Map<String, TypedValue> = map
 }
