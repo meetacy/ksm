@@ -9,7 +9,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.serializer
 import ksm.typed.TypedValue
 
-public object GenericValueDeserializer : KSerializer<TypedValue.Generic<*>> {
+public object GenericValueDeserializer : KSerializer<TypedValue.Generic> {
     @OptIn(ExperimentalSerializationApi::class)
     override val descriptor: SerialDescriptor = SerialDescriptor(
         serialName = "TypedValueSerializer",
@@ -18,12 +18,12 @@ public object GenericValueDeserializer : KSerializer<TypedValue.Generic<*>> {
 
     override fun serialize(
         encoder: Encoder,
-        value: TypedValue.Generic<*>
+        value: TypedValue.Generic
     ) {
-        error("TypedValue.Generic<T> cannot be serialized, only deserialized")
+        error("TypedValue.Generic cannot be serialized, only deserialized. Use TypedValue instead")
     }
 
-    override fun deserialize(decoder: Decoder): TypedValue.Generic<*> {
+    override fun deserialize(decoder: Decoder): TypedValue.Generic {
         return TypedValue.Generic { type ->
             val deserializer = decoder.serializersModule.serializer(type)
             deserializer.deserialize(decoder)

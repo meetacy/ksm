@@ -64,7 +64,7 @@ public object NavigationResultPlugin : Plugin.Singleton<NavigationResultPlugin> 
             .registerNavigator(handler)
 
         return object : NavigatorForResult<T> {
-            override fun navigate(value: TypedValue<T>) {
+            override fun navigate(value: TypedValue) {
                 context.navigate(name, value) { child ->
                     child.setParameter(RESULT_ID_KEY, resultId.int)
                 }

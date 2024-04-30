@@ -8,16 +8,15 @@ import ksm.typed.TypedValue
 
 @MutateContext
 public fun StateContext.addParametersInterceptor(
-    onPut: (key: String, value: TypedValue<*>) -> Unit = { _, _ -> },
-    onReceive: (String) -> TypedValue.Generic<*>? = { null }
+    onPut: (key: String, value: TypedValue) -> Unit = { _, _ -> },
+    onReceive: (String) -> TypedValue.Generic? = { null }
 ) {
     val interceptor = object : ParametersInterceptor {
-        override fun onPut(key: String, value: TypedValue<*>) {
+        override fun onPut(key: String, value: TypedValue) {
             onPut(key, value)
         }
-        override fun <T> onReceive(key: String): TypedValue.Generic<T>? {
-            @Suppress("UNCHECKED_CAST")
-            return onReceive(key) as TypedValue.Generic<T>?
+        override fun onReceive(key: String): TypedValue.Generic? {
+            return onReceive(key)
         }
     }
     addParametersInterceptor(interceptor)

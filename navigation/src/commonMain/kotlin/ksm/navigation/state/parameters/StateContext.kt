@@ -4,6 +4,7 @@ import ksm.context.StateContext
 import ksm.navigation.state.parameters.plugin.StateParametersPlugin
 import ksm.plugin.plugin
 import ksm.typed.TypedValue
+import ksm.typed.get
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
@@ -11,9 +12,9 @@ public inline fun <reified T> StateContext.setParameter(key: String, data: T) {
     return setParameter(key, TypedValue.of(data))
 }
 
-public fun <T> StateContext.setParameter(
+public fun StateContext.setParameter(
     key: String,
-    value: TypedValue<T>
+    value: TypedValue
 ) {
     plugin(StateParametersPlugin).put(
         context = this,
@@ -23,14 +24,17 @@ public fun <T> StateContext.setParameter(
 }
 
 public inline fun <reified T> StateContext.receiveParameter(key: String): T? {
-    return receiveParameter(key, typeOf<T>())
+    return plugin(StateParametersPlugin).receive(
+        context = this,
+        key = key
+    )?.get()
 }
 
-public fun <T> StateContext.receiveParameter(
+public fun StateContext.receiveParameter(
     key: String,
     type: KType
-): T? {
-    return plugin(StateParametersPlugin).receive<T>(
+): Any? {
+    return plugin(StateParametersPlugin).receive(
         context = this,
         key = key
     )?.get(type)

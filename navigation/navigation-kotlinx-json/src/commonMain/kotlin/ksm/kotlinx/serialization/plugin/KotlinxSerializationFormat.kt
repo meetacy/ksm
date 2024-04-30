@@ -22,14 +22,17 @@ internal class KotlinxSerializationFormat(
         }
     }
 
-    override fun encode(value: TypedValue<*>) {
+    override fun encode(value: TypedValue) {
         val serializer = json.serializersModule.serializer(value.type)
         store.apply(json.encodeToString(serializer, value))
     }
 
-    override fun decode(type: KType): Any? {
+    override fun decode(): TypedValue.Generic? {
         val string = store.get() ?: return null
-        val deserializer = json.serializersModule.serializer(type)
-        return json.decodeFromString(deserializer, string)
+        val element = json.parseToJsonElement(string)
+        return TypedValue.Generic {  type ->
+            val deserializer = json.serializersModule.serializer(type)
+            json.decodeFromJsonElement(deserializer, element)
+        }
     }
 }

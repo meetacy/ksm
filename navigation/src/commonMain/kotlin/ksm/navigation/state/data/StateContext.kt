@@ -12,7 +12,7 @@ public inline fun <reified T> StateContext.setStateData(value: T) {
     setStateData(TypedValue.of(value))
 }
 
-public fun StateContext.setStateData(value: TypedValue<*>) {
+public fun StateContext.setStateData(value: TypedValue) {
     setParameter(STATE_DATA_KEY, value)
 }
 

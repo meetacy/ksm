@@ -8,32 +8,29 @@ import ksm.navigation.state.parameters.setParameter
 import ksm.navigation.serialization.BaseSerializationFormat
 import ksm.navigation.stack.previousContextOrNull
 import ksm.typed.TypedValue
-import kotlin.reflect.typeOf
+import ksm.typed.get
+import ksm.typed.getValue
 
-private typealias SerializedStackType = List<TypedValue<Map<String, TypedValue<*>>>>
+private typealias SerializedStackType = List<Map<String, TypedValue.Generic>>
 
 internal class BaseSerializationStateController(
     private val format: BaseSerializationFormat
 ) : StateContext.Element {
     override val key = BaseSerializationStateController
 
-    private val serializedStackType = typeOf<SerializedStackType>()
-
-    @Suppress("UNCHECKED_CAST")
     fun restore(root: StateContext) {
-        val serializedStack = format.decode(serializedStackType) ?: return
-        serializedStack as SerializedStackType
+        val serializedStack: SerializedStackType by format.decode() ?: return
         var current = root
         for (serializedEntry in serializedStack) {
-            current = decodeEntry(current, serializedEntry.data)
+            current = decodeEntry(current, serializedEntry)
         }
     }
 
     private fun decodeEntry(
         context: StateContext,
-        parameters: Map<String, TypedValue<*>>
+        parameters: Map<String, TypedValue.Generic>
     ): StateContext = context.createChildContext { child ->
-        val name = parameters[STATE_NAME_KEY]?.data as String?
+        val name: String? = parameters[STATE_NAME_KEY]?.get()
         if (name != null) {
             child.setName(name)
         }
@@ -45,7 +42,7 @@ internal class BaseSerializationStateController(
 
     fun commit(context: StateContext, entry: BaseSerializationParametersInterceptor) {
         var current: StateContext? = context
-        val serializedStack = mutableListOf<TypedValue<*>>()
+        val serializedStack = mutableListOf<TypedValue>()
 
         while (current != null) {
             val encodedEntry = encodeEntry(current, entry)
@@ -64,7 +61,7 @@ internal class BaseSerializationStateController(
     private fun encodeEntry(
         context: StateContext,
         entry: BaseSerializationParametersInterceptor
-    ): TypedValue<*> {
+    ): TypedValue {
         val name = STATE_NAME_KEY to TypedValue.Generic.of(context.name)
         val map = entry.toMap() + name
         return TypedValue.of(map)

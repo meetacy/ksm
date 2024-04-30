@@ -15,16 +15,16 @@ internal class StateParametersEntry : StateContext.Element {
 
     fun onPut(
         key: String,
-        value: TypedValue<*>
+        value: TypedValue
     ) {
         for (interceptor in interceptors) {
             interceptor.onPut(key, value)
         }
     }
 
-    fun <T> onReceive(key: String): TypedValue.Generic<T>? {
+    fun onReceive(key: String): TypedValue.Generic? {
         for (interceptor in interceptors.asReversed()) {
-            val value = interceptor.onReceive<T>(key)
+            val value = interceptor.onReceive(key)
             if (value != null) return value
         }
         return null

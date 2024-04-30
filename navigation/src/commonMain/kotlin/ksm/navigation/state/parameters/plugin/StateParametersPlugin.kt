@@ -28,18 +28,18 @@ public object StateParametersPlugin : Plugin.Singleton<StateParametersPlugin> {
         }
     }
 
-    public fun <T> put(
+    public fun put(
         context: StateContext,
         key: String,
-        value: TypedValue<T>
+        value: TypedValue
     ) {
         context.require(StateParametersEntry).onPut(key, value)
     }
 
-    public fun <T> receive(
+    public fun receive(
         context: StateContext,
         key: String
-    ): TypedValue.Generic<T>? {
+    ): TypedValue.Generic? {
         return context.require(StateParametersEntry).onReceive(key)
     }
 

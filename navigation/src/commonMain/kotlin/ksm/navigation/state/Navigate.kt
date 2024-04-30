@@ -16,7 +16,7 @@ public inline fun <reified T> StateController.navigate(
 
 public fun StateController.navigate(
     name: String,
-    data: TypedValue<*> = TypedValue.of(Unit)
+    data: TypedValue = TypedValue.of(Unit)
 ) {
     context.navigate(name, data)
 }
@@ -30,7 +30,7 @@ public inline fun <reified T> StateContext.navigate(
 
 public inline fun StateContext.navigate(
     name: String,
-    data: TypedValue<*> = TypedValue.of(Unit),
+    data: TypedValue = TypedValue.of(Unit),
     setup: (StateContext) -> Unit = {}
 ) {
     createChildContext { child ->
