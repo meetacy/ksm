@@ -1,7 +1,7 @@
 package ksm.navigation.state.name
 
-import ksm.navigation.state.builder.StateBuilderScope
-import ksm.navigation.state.builder.StateRouteScope
+import ksm.navigation.state.route.StateBuilderScope
+import ksm.navigation.state.route.StateRouteScope
 
 public inline fun StateRouteScope.named(
     string: String,

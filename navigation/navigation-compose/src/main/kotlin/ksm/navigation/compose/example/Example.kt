@@ -7,8 +7,8 @@ import ksm.StateController
 import ksm.navigation.compose.Content
 import ksm.navigation.compose.host.NavigationStateHost
 import ksm.navigation.compose.rememberStateController
-import ksm.navigation.state.builder.StateRouteScope
-import ksm.navigation.state.builder.states
+import ksm.navigation.state.route.StateRouteScope
+import ksm.navigation.state.route.states
 import ksm.navigation.state.data.receive
 import ksm.navigation.state.name.named
 import ksm.navigation.result.*

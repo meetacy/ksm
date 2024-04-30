@@ -1,4 +1,4 @@
-package ksm.navigation.state.builder
+package ksm.navigation.state.route
 
 import ksm.navigation.annotation.StateBuilderDSL
 import ksm.context.StateContext
