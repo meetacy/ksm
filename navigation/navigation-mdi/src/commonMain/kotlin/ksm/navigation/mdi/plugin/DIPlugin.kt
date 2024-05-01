@@ -22,43 +22,35 @@ public class DIPlugin(
     @MutateContext
     override fun install(context: StateContext): StateContext {
         context.addConfigurationInterceptor(Configuration())
-        val di = di(
-            di = root,
-            checkDependencies = checkDependencies,
-            block = perStateDI
-        )
-        return context + DIEntry(di)
+        return context + DIEntry(root)
     }
 
     private inner class Configuration : ConfigurationInterceptor {
         @MutateContext
         override fun onConfigure(context: StateContext): StateContext {
             context.addLifecycleInterceptor(Lifecycle())
-            val di = di(
-                di = root,
-                checkDependencies = checkDependencies,
-                block = perStateDI
-            )
-            return context + DIEntry(di)
+            return context + DIEntry()
         }
     }
 
     private inner class Lifecycle : LifecycleInterceptor {
         override fun onCreate(context: StateContext) {
             val entry = context.require(DIEntry)
-            val controllerDI = di {
+            var di = di(root, checkDependencies, perStateDI) + di {
                 val stateController by constant(context.asStateController())
             }
-            entry.setDI(di = entry.getDI()?.plus(controllerDI))
+            val entryDI = entry.di
+            if (entryDI != null) di += entryDI
+            entry.di = di
         }
     }
 
     public fun di(context: StateContext): DI {
-        return context.require(DIEntry).getDI() ?: error("DI is not initialized")
+        return context.require(DIEntry).di ?: error("DI is not initialized")
     }
 
     public fun setDI(context: StateContext, di: DI) {
-        context.require(DIEntry).setDI(di)
+        context.require(DIEntry).di = di
     }
 
     public companion object : StateContext.Key<DIPlugin>

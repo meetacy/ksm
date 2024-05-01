@@ -3,20 +3,10 @@ package ksm.navigation.mdi.plugin
 import app.meetacy.di.DI
 import ksm.context.StateContext
 
-internal class DIEntry(private val root: DI) : StateContext.Element {
+internal class DIEntry(base: DI? = null) : StateContext.Element {
     override val key = DIEntry
 
-    private var di: DI? = root
-
-    fun setDI(di: DI?) {
-        if (di == null) {
-            this.di = null
-            return
-        }
-        this.di = root + di
-    }
-
-    fun getDI() = di
+    var di: DI? = base
 
     companion object : StateContext.Key<DIEntry>
 }
