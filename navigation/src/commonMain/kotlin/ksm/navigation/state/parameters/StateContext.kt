@@ -27,7 +27,7 @@ public inline fun <reified T> StateContext.receiveParameter(key: String): T? {
     return plugin(StateParametersPlugin).receive(
         context = this,
         key = key
-    )?.get()
+    )?.get<T>()
 }
 
 public fun StateContext.receiveParameter(
