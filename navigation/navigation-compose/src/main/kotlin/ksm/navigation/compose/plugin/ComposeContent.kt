@@ -5,5 +5,5 @@ import ksm.StateController
 
 public fun interface ComposeContent {
     @Composable
-    public fun Content(controller: StateController)
+    public fun StateController.Content()
 }

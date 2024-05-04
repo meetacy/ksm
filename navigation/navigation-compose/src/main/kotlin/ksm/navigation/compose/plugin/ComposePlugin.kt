@@ -61,7 +61,7 @@ public class ComposePlugin(
         val entry = context.require(ComposeEntry)
         val interceptor = entry.interceptor
         val base = ComposeContent(content)
-        entry.content = interceptor?.intercept(context, base) ?: base
+        entry.content = interceptor?.intercept(base) ?: base
     }
 
     public fun content(context: StateContext): ComposeContent? {
