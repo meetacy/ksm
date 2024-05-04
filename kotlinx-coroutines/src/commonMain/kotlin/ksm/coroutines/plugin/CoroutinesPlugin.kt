@@ -6,14 +6,12 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.context.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.ConfigurationInterceptor
 import ksm.plugin.Plugin
-import ksm.context.configuration.interceptor.addConfigurationInterceptor
+import ksm.configuration.interceptor.addConfigurationInterceptor
 import ksm.context.finish
-import ksm.lifecycle.LifecycleInterceptor
+import ksm.lifecycle.interceptor.LifecycleInterceptor
 import ksm.lifecycle.addLifecycleInterceptor
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 public class CoroutinesPlugin(
     private val scope: CoroutineScope

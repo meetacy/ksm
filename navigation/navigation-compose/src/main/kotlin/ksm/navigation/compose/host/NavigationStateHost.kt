@@ -27,7 +27,7 @@ public fun NavigationStateHost(
             currentContext ?: return
             val childController = currentContext.asStateController()
             val content = currentContext.plugin(ComposePlugin).content(currentContext)
-            content?.invoke(childController)
+            content?.Content(childController)
         }
     }
 }

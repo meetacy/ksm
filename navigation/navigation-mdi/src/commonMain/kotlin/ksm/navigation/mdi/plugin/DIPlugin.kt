@@ -6,11 +6,14 @@ import app.meetacy.di.builder.di
 import ksm.annotation.MutateContext
 import ksm.asStateController
 import ksm.context.StateContext
-import ksm.context.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.ConfigurationInterceptor
 import ksm.plugin.Plugin
-import ksm.context.configuration.interceptor.addConfigurationInterceptor
-import ksm.lifecycle.LifecycleInterceptor
+import ksm.configuration.interceptor.addConfigurationInterceptor
+import ksm.lifecycle.interceptor.LifecycleInterceptor
 import ksm.lifecycle.addLifecycleInterceptor
+import ksm.navigation.mdi.addDIInterceptor
+import ksm.navigation.mdi.interceptor.DIInterceptor
+import ksm.navigation.mdi.interceptor.plus
 
 public class DIPlugin(
     private val root: DI = di { },
@@ -22,27 +25,31 @@ public class DIPlugin(
     @MutateContext
     override fun install(context: StateContext): StateContext {
         context.addConfigurationInterceptor(Configuration())
-        return context + DIEntry(root)
+        val entry = DIEntry()
+        entry.di = root
+        return context + entry
     }
 
     private inner class Configuration : ConfigurationInterceptor {
         @MutateContext
         override fun onConfigure(context: StateContext): StateContext {
-            context.addLifecycleInterceptor(Lifecycle())
-            return context + DIEntry()
+            val applied = context + DIEntry()
+            applied.addDIInterceptor(DefaultInterceptor())
+            return applied
         }
     }
 
-    private inner class Lifecycle : LifecycleInterceptor {
-        override fun onCreate(context: StateContext) {
-            val entry = context.require(DIEntry)
-            var di = di(root, checkDependencies, perStateDI) + di {
-                val stateController by constant(context.asStateController())
-            }
-            val entryDI = entry.di
-            if (entryDI != null) di += entryDI
-            entry.di = di
+    private inner class DefaultInterceptor : DIInterceptor {
+        override fun intercept(context: StateContext, base: DI): DI {
+            var applied = base
+            applied += di(root, checkDependencies, perStateDI)
+            applied += di { val stateController by constant(context.asStateController()) }
+            return applied
         }
+    }
+
+    public fun addDIInterceptor(context: StateContext, interceptor: DIInterceptor) {
+        context.require(DIEntry).interceptor += interceptor
     }
 
     public fun di(context: StateContext): DI {
@@ -50,7 +57,9 @@ public class DIPlugin(
     }
 
     public fun setDI(context: StateContext, di: DI) {
-        context.require(DIEntry).di = di
+        val entry = context.require(DIEntry)
+        val interceptor = entry.interceptor
+        entry.di = interceptor?.intercept(context, di) ?: di
     }
 
     public companion object : StateContext.Key<DIPlugin>

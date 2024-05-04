@@ -1,7 +1,7 @@
-package ksm.context.configuration.interceptor
+package ksm.configuration.interceptor
 
 import ksm.context.StateContext
-import ksm.context.configuration.plugin.ConfigurationPlugin
+import ksm.configuration.plugin.ConfigurationPlugin
 import ksm.plugin.plugin
 
 public fun StateContext.addConfigurationInterceptor(interceptor: ConfigurationInterceptor) {

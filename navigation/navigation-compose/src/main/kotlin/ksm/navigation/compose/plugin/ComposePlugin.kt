@@ -5,17 +5,24 @@ import androidx.compose.runtime.mutableStateOf
 import ksm.StateController
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.context.configuration.interceptor.ConfigurationInterceptor
-import ksm.context.configuration.interceptor.addConfigurationInterceptor
-import ksm.lifecycle.LifecycleInterceptor
+import ksm.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.addConfigurationInterceptor
+import ksm.lifecycle.interceptor.LifecycleInterceptor
 import ksm.lifecycle.addLifecycleInterceptor
+import ksm.navigation.compose.wrapper.ComposeWrapper
+import ksm.navigation.compose.interceptor.ComposeInterceptor
+import ksm.navigation.compose.interceptor.plus
+import ksm.navigation.compose.wrapper.toInterceptor
 import ksm.navigation.serialization.BaseSerializationStore
 import ksm.plugin.Plugin
 
 public class ComposePlugin(
-    private val store: BaseSerializationStore.String
+    private val store: BaseSerializationStore.String,
+    wrapper: ComposeWrapper? = null
 ) : Plugin {
     override val key: Companion = ComposePlugin
+
+    private val interceptor = wrapper?.toInterceptor()
 
     internal val currentContext = mutableStateOf<StateContext?>(value = null)
 
@@ -30,7 +37,7 @@ public class ComposePlugin(
         @MutateContext
         override fun onConfigure(context: StateContext): StateContext {
             context.addLifecycleInterceptor(Lifecycle())
-            return context + ComposeEntry()
+            return context + ComposeEntry(interceptor)
         }
     }
 
@@ -40,14 +47,24 @@ public class ComposePlugin(
         }
     }
 
-    internal fun setContent(
+    public fun addComposeInterceptor(
+        context: StateContext,
+        interceptor: ComposeInterceptor
+    ) {
+        context.require(ComposeEntry).interceptor += interceptor
+    }
+
+    public fun setContent(
         context: StateContext,
         content: @Composable StateController.() -> Unit
     ) {
-        context.require(ComposeEntry).content = content
+        val entry = context.require(ComposeEntry)
+        val interceptor = entry.interceptor
+        val base = ComposeContent(content)
+        entry.content = interceptor?.intercept(context, base) ?: base
     }
 
-    internal fun content(context: StateContext): (@Composable StateController.() -> Unit)? {
+    public fun content(context: StateContext): ComposeContent? {
         return context.require(ComposeEntry).content
     }
 

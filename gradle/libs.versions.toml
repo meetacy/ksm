@@ -9,9 +9,9 @@ compose-compiler = "1.5.11"
 androidx-navigation = "2.7.7"
 androidx-lifecycle = "2.7.0"
 ktgbotapi = "11.0.0"
-mdi = "0.0.37"
+mdi = "0.0.38"
 
-ksm = "0.0.28"
+ksm = "0.0.29"
 
 [libraries]
 

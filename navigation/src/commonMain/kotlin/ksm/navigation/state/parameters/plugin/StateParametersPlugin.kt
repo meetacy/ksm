@@ -2,8 +2,8 @@ package ksm.navigation.state.parameters.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.context.configuration.interceptor.ConfigurationInterceptor
-import ksm.context.configuration.interceptor.addConfigurationInterceptor
+import ksm.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.addConfigurationInterceptor
 import ksm.navigation.state.parameters.interceptor.ParametersInterceptor
 import ksm.navigation.state.parameters.interceptor.memory.MemoryParametersInterceptor
 import ksm.plugin.Plugin

@@ -3,7 +3,7 @@ package ksm
 import ksm.annotation.LibraryConstructor
 import ksm.builder.StateControllerBuilder
 import ksm.context.StateContext
-import ksm.context.configuration.plugin.ConfigurationPlugin
+import ksm.configuration.plugin.ConfigurationPlugin
 import ksm.context.finish
 import ksm.finish.once.plugin.FinishOncePlugin
 import ksm.lifecycle.plugin.LifecyclePlugin

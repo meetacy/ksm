@@ -5,8 +5,8 @@ import dev.inmo.tgbotapi.types.update.abstracts.Update
 import ksm.StateController
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.context.configuration.interceptor.ConfigurationInterceptor
-import ksm.context.configuration.interceptor.addConfigurationInterceptor
+import ksm.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.addConfigurationInterceptor
 import ksm.navigation.ktgbotapi.TelegramPeerKey
 import ksm.plugin.Plugin
 

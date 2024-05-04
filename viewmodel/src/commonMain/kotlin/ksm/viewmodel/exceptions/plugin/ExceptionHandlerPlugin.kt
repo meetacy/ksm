@@ -2,8 +2,8 @@ package ksm.viewmodel.exceptions.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.context.configuration.interceptor.ConfigurationInterceptor
-import ksm.context.configuration.interceptor.addConfigurationInterceptor
+import ksm.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.addConfigurationInterceptor
 import ksm.viewmodel.exceptions.ExceptionHandler
 import ksm.plugin.Plugin
 

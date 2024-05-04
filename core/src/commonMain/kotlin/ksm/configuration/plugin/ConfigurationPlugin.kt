@@ -1,8 +1,9 @@
-package ksm.context.configuration.plugin
+package ksm.configuration.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.context.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.plus
 import ksm.plugin.Plugin
 
 public object ConfigurationPlugin : Plugin.Singleton<ConfigurationPlugin> {
@@ -16,11 +17,13 @@ public object ConfigurationPlugin : Plugin.Singleton<ConfigurationPlugin> {
         context: StateContext,
         interceptor: ConfigurationInterceptor
     ) {
-        context.require(ConfigurationStateController).addInterceptor(interceptor)
+        context.require(ConfigurationStateController).interceptor += interceptor
     }
 
     @MutateContext
     public fun onConfigure(context: StateContext): StateContext {
-        return context.require(ConfigurationStateController).onConfigure(context)
+        return context.require(ConfigurationStateController)
+            .interceptor?.onConfigure(context)
+            ?: context
     }
 }

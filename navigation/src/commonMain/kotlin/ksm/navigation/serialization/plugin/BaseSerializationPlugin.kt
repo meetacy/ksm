@@ -2,9 +2,9 @@ package ksm.navigation.serialization.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.context.configuration.interceptor.ConfigurationInterceptor
-import ksm.context.configuration.interceptor.addConfigurationInterceptor
-import ksm.lifecycle.LifecycleInterceptor
+import ksm.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.addConfigurationInterceptor
+import ksm.lifecycle.interceptor.LifecycleInterceptor
 import ksm.lifecycle.addLifecycleInterceptor
 import ksm.navigation.state.parameters.interceptor.addParametersInterceptor
 import ksm.plugin.Plugin

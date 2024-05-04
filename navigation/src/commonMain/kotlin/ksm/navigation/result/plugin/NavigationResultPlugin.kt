@@ -2,10 +2,10 @@ package ksm.navigation.result.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.context.configuration.interceptor.ConfigurationInterceptor
-import ksm.context.configuration.interceptor.addConfigurationInterceptor
+import ksm.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.addConfigurationInterceptor
 import ksm.context.finish
-import ksm.lifecycle.LifecycleInterceptor
+import ksm.lifecycle.interceptor.LifecycleInterceptor
 import ksm.lifecycle.addLifecycleInterceptor
 import ksm.navigation.state.navigate
 import ksm.navigation.state.parameters.receiveParameter

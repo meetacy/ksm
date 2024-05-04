@@ -2,8 +2,8 @@ package ksm.finish.once.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.context.configuration.interceptor.ConfigurationInterceptor
-import ksm.context.configuration.interceptor.addConfigurationInterceptor
+import ksm.configuration.interceptor.ConfigurationInterceptor
+import ksm.configuration.interceptor.addConfigurationInterceptor
 import ksm.plugin.Plugin
 
 public object FinishOncePlugin : Plugin.Singleton<FinishOncePlugin> {

@@ -1,13 +1,13 @@
 package ksm.navigation.compose.plugin
 
-import androidx.compose.runtime.Composable
-import ksm.StateController
 import ksm.context.StateContext
+import ksm.navigation.compose.interceptor.ComposeInterceptor
 
-internal class ComposeEntry : StateContext.Element {
+internal class ComposeEntry(var interceptor: ComposeInterceptor?) : StateContext.Element {
     override val key = ComposeEntry
 
-    var content: (@Composable StateController.() -> Unit)? = null
+
+    var content: ComposeContent? = null
 
     companion object : StateContext.Key<ComposeEntry>
 }
