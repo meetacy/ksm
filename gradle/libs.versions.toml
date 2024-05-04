@@ -11,7 +11,7 @@ androidx-lifecycle = "2.7.0"
 ktgbotapi = "11.0.0"
 mdi = "0.0.38"
 
-ksm = "0.0.31"
+ksm = "0.0.32"
 
 [libraries]
 
