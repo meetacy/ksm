@@ -42,7 +42,12 @@ public object LifecyclePlugin : Plugin.Singleton<LifecyclePlugin> {
     public fun onFinish(context: StateContext) {
         context.require(LifecycleEntry).interceptor?.onFinish(context)
     }
-    public fun onChildCreate(context: StateContext): StateContext {
-        return context.require(LifecycleEntry).interceptor?.onChildCreate(context) ?: context
+    public fun onChildCreate(
+        context: StateContext,
+        afterConfigure: StateContext
+    ): StateContext {
+        return context.require(LifecycleEntry)
+            .interceptor?.onChildCreate(afterConfigure)
+            ?: afterConfigure
     }
 }

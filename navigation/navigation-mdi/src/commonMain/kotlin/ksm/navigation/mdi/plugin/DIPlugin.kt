@@ -3,17 +3,18 @@ package ksm.navigation.mdi.plugin
 import app.meetacy.di.DI
 import app.meetacy.di.builder.DIBuilder
 import app.meetacy.di.builder.di
+import app.meetacy.di.dependency.Dependencies
 import ksm.annotation.MutateContext
 import ksm.asStateController
 import ksm.context.StateContext
 import ksm.configuration.interceptor.ConfigurationInterceptor
 import ksm.plugin.Plugin
 import ksm.configuration.interceptor.addConfigurationInterceptor
-import ksm.lifecycle.interceptor.LifecycleInterceptor
-import ksm.lifecycle.addLifecycleInterceptor
 import ksm.navigation.mdi.addDIInterceptor
 import ksm.navigation.mdi.interceptor.DIInterceptor
 import ksm.navigation.mdi.interceptor.plus
+import ksm.navigation.state.route.addStateReadyInterceptor
+import ksm.navigation.state.route.interceptor.StateRouteInterceptor
 
 public class DIPlugin(
     private val root: DI = di { },
@@ -33,9 +34,18 @@ public class DIPlugin(
     private inner class Configuration : ConfigurationInterceptor {
         @MutateContext
         override fun onConfigure(context: StateContext): StateContext {
-            val applied = context + DIEntry()
-            applied.addDIInterceptor(DefaultInterceptor())
-            return applied
+            context.addStateReadyInterceptor(StateRoute())
+            return context + DIEntry()
+        }
+    }
+
+    private inner class StateRoute : StateRouteInterceptor {
+        override fun onStateRoute(context: StateContext) {
+            context.addDIInterceptor(DefaultInterceptor())
+            val entry = context.require(DIEntry)
+            val di = entry.di ?: DI(Dependencies.Empty)
+            val interceptor = entry.interceptor
+            entry.di = interceptor?.intercept(context, di) ?: di
         }
     }
 
@@ -57,9 +67,7 @@ public class DIPlugin(
     }
 
     public fun setDI(context: StateContext, di: DI) {
-        val entry = context.require(DIEntry)
-        val interceptor = entry.interceptor
-        entry.di = interceptor?.intercept(context, di) ?: di
+        context.require(DIEntry).di = di
     }
 
     public companion object : StateContext.Key<DIPlugin>

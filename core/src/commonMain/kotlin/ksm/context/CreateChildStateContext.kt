@@ -10,11 +10,14 @@ public inline fun StateContext.createChildContext(
 ): StateContext {
     var applied = this
 
-    applied = this[ConfigurationPlugin]?.onConfigure(applied) ?: applied
+    applied = applied[ConfigurationPlugin]?.onConfigure(applied) ?: applied
 
-    // intentionally using this[LifecyclePlugin], not applied[LifecyclePlugin]
-    // in order to ignore lifecycle interceptors installed in onConfigure
-    applied = this[LifecyclePlugin]?.onChildCreate(applied) ?: applied
+    applied = applied[LifecyclePlugin]?.onChildCreate(
+        // this makes us to ignore newly
+        // installed LifecycleInterceptors from onConfigure
+        context = this,
+        afterConfigure = applied
+    ) ?: applied
 
     applied.apply(setup)
 
