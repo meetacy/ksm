@@ -5,13 +5,12 @@ import ksm.navigation.stack.installStackPlugin
 import ksm.navigation.state.name.installStateName
 import ksm.navigation.state.parameters.installStateParameters
 import ksm.navigation.state.route.installStateRoute
-import ksm.plugin.factory.ControllerFactory
+import ksm.plugin.factory.StateControllerFactory
 import ksm.plugin.pluginRuntime
-import kotlin.reflect.KType
 
 @LibraryApi
 public inline fun NavigationController.Builder.navigationRuntime(
-    controllerFactory: ControllerFactory,
+    controllerFactory: StateControllerFactory,
     enableConfiguration: Boolean = true,
     enableLifecycle: Boolean = true,
     enableFinishOnce: Boolean = true,

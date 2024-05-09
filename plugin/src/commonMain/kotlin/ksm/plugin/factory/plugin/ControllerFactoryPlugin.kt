@@ -3,10 +3,10 @@ package ksm.plugin.factory.plugin
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
 import ksm.plugin.Plugin
-import ksm.plugin.factory.ControllerFactory
+import ksm.plugin.factory.StateControllerFactory
 
 public class ControllerFactoryPlugin(
-    public val factory: ControllerFactory
+    public val factory: StateControllerFactory
 ) : Plugin {
     override val key: Companion = ControllerFactoryPlugin
 

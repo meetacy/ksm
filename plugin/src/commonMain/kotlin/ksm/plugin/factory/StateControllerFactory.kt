@@ -4,7 +4,7 @@ import ksm.context.StateContext
 import ksm.plugin.PluginController
 import kotlin.reflect.KType
 
-public interface ControllerFactory {
+public interface StateControllerFactory {
     public val type: KType
-    public fun wrap(context: StateContext): PluginController
+    public fun wrap(context: StateContext = StateContext.Empty): PluginController
 }

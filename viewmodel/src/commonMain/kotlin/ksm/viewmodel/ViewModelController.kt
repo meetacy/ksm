@@ -4,7 +4,7 @@ import ksm.annotation.LibraryApi
 import ksm.context.StateContext
 import ksm.context.createChildContext
 import ksm.plugin.PluginController
-import ksm.plugin.factory.ControllerFactory
+import ksm.plugin.factory.StateControllerFactory
 import ksm.plugin.factory.asController
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
@@ -12,7 +12,7 @@ import kotlin.reflect.typeOf
 public interface ViewModelController : PluginController {
     public interface Builder : PluginController.Builder
 
-    public companion object : ControllerFactory {
+    public companion object : StateControllerFactory {
         override val type: KType = typeOf<ViewModelController>()
 
         override fun wrap(context: StateContext): PluginController {

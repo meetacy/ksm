@@ -6,6 +6,6 @@ import ksm.plugin.factory.plugin.ControllerFactoryPlugin
 import ksm.plugin.install
 
 @OptIn(LibraryApi::class)
-public fun PluginController.Builder.installControllerFactory(factory: ControllerFactory) {
+public fun PluginController.Builder.installControllerFactory(factory: StateControllerFactory) {
     install(ControllerFactoryPlugin(factory))
 }
