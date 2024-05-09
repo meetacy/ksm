@@ -10,11 +10,11 @@ import ksm.context.StateContext
 import ksm.configuration.interceptor.ConfigurationInterceptor
 import ksm.plugin.Plugin
 import ksm.configuration.interceptor.addConfigurationInterceptor
+import ksm.lifecycle.addLifecycleInterceptor
+import ksm.lifecycle.interceptor.LifecycleInterceptor
 import ksm.navigation.mdi.addDIInterceptor
 import ksm.navigation.mdi.interceptor.DIInterceptor
 import ksm.navigation.mdi.interceptor.plus
-import ksm.navigation.state.route.addStateReadyInterceptor
-import ksm.navigation.state.route.interceptor.StateRouteInterceptor
 
 public class DIPlugin(
     private val root: DI = di { },
@@ -34,14 +34,15 @@ public class DIPlugin(
     private inner class Configuration : ConfigurationInterceptor {
         @MutateContext
         override fun onConfigure(context: StateContext): StateContext {
-            context.addStateReadyInterceptor(StateRoute())
-            return context + DIEntry()
+            val applied = context + DIEntry()
+            applied.addLifecycleInterceptor(Lifecycle())
+            applied.addDIInterceptor(DefaultInterceptor())
+            return applied
         }
     }
 
-    private inner class StateRoute : StateRouteInterceptor {
-        override fun onStateRoute(context: StateContext) {
-            context.addDIInterceptor(DefaultInterceptor())
+    private inner class Lifecycle : LifecycleInterceptor {
+        override fun onCreate(context: StateContext) {
             val entry = context.require(DIEntry)
             val di = entry.di ?: DI(Dependencies.Empty)
             val interceptor = entry.interceptor
