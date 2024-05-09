@@ -2,10 +2,10 @@ package ksm.viewmodel.exceptions.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.configuration.interceptor.ConfigurationInterceptor
-import ksm.configuration.interceptor.addConfigurationInterceptor
 import ksm.viewmodel.exceptions.ExceptionHandler
 import ksm.plugin.Plugin
+import ksm.plugin.configuration.interceptor.ConfigurationInterceptor
+import ksm.plugin.configuration.interceptor.addConfigurationInterceptor
 
 public object ExceptionHandlerPlugin : Plugin.Singleton<ExceptionHandlerPlugin> {
 

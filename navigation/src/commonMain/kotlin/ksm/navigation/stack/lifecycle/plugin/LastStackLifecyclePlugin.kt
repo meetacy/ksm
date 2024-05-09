@@ -2,13 +2,13 @@ package ksm.navigation.stack.lifecycle.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.configuration.interceptor.ConfigurationInterceptor
-import ksm.configuration.interceptor.addConfigurationInterceptor
-import ksm.lifecycle.interceptor.LifecycleInterceptor
-import ksm.lifecycle.addLifecycleInterceptor
-import ksm.lifecycle.plugin.LifecyclePlugin
 import ksm.navigation.stack.previousContextOrNull
 import ksm.plugin.Plugin
+import ksm.plugin.configuration.interceptor.ConfigurationInterceptor
+import ksm.plugin.configuration.interceptor.addConfigurationInterceptor
+import ksm.plugin.lifecycle.addLifecycleInterceptor
+import ksm.plugin.lifecycle.interceptor.LifecycleInterceptor
+import ksm.plugin.lifecycle.plugin.LifecyclePlugin
 
 // This plugin is installed after any of navigation plugins
 public object LastStackLifecyclePlugin : Plugin.Singleton<FirstStackLifecyclePlugin> {

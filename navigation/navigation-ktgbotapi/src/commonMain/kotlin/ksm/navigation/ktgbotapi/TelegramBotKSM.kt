@@ -4,12 +4,10 @@ import dev.inmo.tgbotapi.bot.TelegramBot
 import dev.inmo.tgbotapi.types.update.abstracts.Update
 import kotlinx.coroutines.flow.Flow
 import ksm.StateController
-import ksm.annotation.LibraryConstructor
-import ksm.asStateController
-import ksm.builder.StateControllerBuilder
+import ksm.annotation.LibraryApi
 import ksm.navigation.state.navigate
 import ksm.navigation.ktgbotapi.plugin.TelegramBotApiPlugin
-import ksm.navigation.navigationStateController
+import ksm.navigation.navigationRuntime
 import ksm.navigation.serialization.restore
 import ksm.navigation.stack.hasNextContext
 import ksm.navigation.stack.lastContext
@@ -39,13 +37,13 @@ public class TelegramBotStateMachine(
         }
     }
 
-    @OptIn(LibraryConstructor::class)
+    @OptIn(LibraryApi::class)
     private fun createStateController(
         key: TelegramPeerKey,
         update: Update,
         telegramBot: TelegramBot
     ): StateController {
-        return navigationStateController {
+        return navigationRuntime {
             install(TelegramBotApiPlugin(key, update, telegramBot))
             builder()
         }.apply {

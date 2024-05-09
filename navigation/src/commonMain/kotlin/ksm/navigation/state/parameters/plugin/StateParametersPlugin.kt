@@ -2,11 +2,11 @@ package ksm.navigation.state.parameters.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.configuration.interceptor.ConfigurationInterceptor
-import ksm.configuration.interceptor.addConfigurationInterceptor
 import ksm.navigation.state.parameters.interceptor.ParametersInterceptor
 import ksm.navigation.state.parameters.interceptor.memory.MemoryParametersInterceptor
 import ksm.plugin.Plugin
+import ksm.plugin.configuration.interceptor.ConfigurationInterceptor
+import ksm.plugin.configuration.interceptor.addConfigurationInterceptor
 import ksm.typed.TypedValue
 
 public object StateParametersPlugin : Plugin.Singleton<StateParametersPlugin> {

@@ -1,7 +1,7 @@
 package ksm.navigation.stack.plugin
 
 import ksm.context.StateContext
-import ksm.context.finish
+import ksm.finish
 
 internal class NavigationStackEntry(
     private val previousEntry: NavigationStackEntry?

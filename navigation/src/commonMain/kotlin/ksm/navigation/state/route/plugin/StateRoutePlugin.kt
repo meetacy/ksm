@@ -2,12 +2,12 @@ package ksm.navigation.state.route.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.configuration.interceptor.ConfigurationInterceptor
-import ksm.configuration.interceptor.addConfigurationInterceptor
-import ksm.lifecycle.interceptor.LifecycleInterceptor
-import ksm.lifecycle.addLifecycleInterceptor
 import ksm.navigation.state.route.StateRouteScope
 import ksm.plugin.Plugin
+import ksm.plugin.configuration.interceptor.ConfigurationInterceptor
+import ksm.plugin.configuration.interceptor.addConfigurationInterceptor
+import ksm.plugin.lifecycle.addLifecycleInterceptor
+import ksm.plugin.lifecycle.interceptor.LifecycleInterceptor
 
 public object StateRoutePlugin : Plugin.Singleton<StateRoutePlugin> {
     // todo: вынести в StateRouteStateController
@@ -23,7 +23,7 @@ public object StateRoutePlugin : Plugin.Singleton<StateRoutePlugin> {
         @MutateContext
         override fun onConfigure(context: StateContext): StateContext {
             context.addLifecycleInterceptor(Lifecycle)
-            return context + StateRouteEntry()
+            return context
         }
     }
 
@@ -32,7 +32,6 @@ public object StateRoutePlugin : Plugin.Singleton<StateRoutePlugin> {
             val scope = StateRouteScope(context)
             val block = block ?: error("Please call `states` in StateControllerBuilder")
             block(scope)
-            context.require(StateRouteEntry).interceptor?.onStateRoute(context)
             if (!scope.intercepted) {
                 error("Cannot launch state because there is no handlers for this")
             }

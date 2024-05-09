@@ -4,17 +4,20 @@ import app.meetacy.di.DI
 import app.meetacy.di.builder.DIBuilder
 import app.meetacy.di.builder.di
 import app.meetacy.di.dependency.Dependencies
+import app.meetacy.di.dependency.DependencyKey
 import ksm.annotation.MutateContext
-import ksm.asStateController
 import ksm.context.StateContext
-import ksm.configuration.interceptor.ConfigurationInterceptor
+import ksm.navigation.NavigationController
 import ksm.plugin.Plugin
-import ksm.configuration.interceptor.addConfigurationInterceptor
-import ksm.lifecycle.addLifecycleInterceptor
-import ksm.lifecycle.interceptor.LifecycleInterceptor
 import ksm.navigation.mdi.addDIInterceptor
 import ksm.navigation.mdi.interceptor.DIInterceptor
 import ksm.navigation.mdi.interceptor.plus
+import ksm.plugin.configuration.interceptor.ConfigurationInterceptor
+import ksm.plugin.configuration.interceptor.addConfigurationInterceptor
+import ksm.plugin.factory.asController
+import ksm.plugin.factory.controllerFactory
+import ksm.plugin.lifecycle.addLifecycleInterceptor
+import ksm.plugin.lifecycle.interceptor.LifecycleInterceptor
 
 public class DIPlugin(
     private val root: DI = di { },
@@ -54,7 +57,13 @@ public class DIPlugin(
         override fun intercept(context: StateContext, base: DI): DI {
             var applied = base
             applied += di(root, checkDependencies, perStateDI)
-            applied += di { val stateController by constant(context.asStateController()) }
+            applied += di {
+                val key = DependencyKey<NavigationController>(
+                    type = context.controllerFactory.type,
+                    name = "stateController"
+                )
+                register(key) { context.asController() }
+            }
             return applied
         }
     }

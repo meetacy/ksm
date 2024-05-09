@@ -2,10 +2,10 @@ package ksm.coroutines.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.configuration.interceptor.ConfigurationInterceptor
-import ksm.configuration.interceptor.addConfigurationInterceptor
 import ksm.coroutines.interceptor.AwaitInterceptor
 import ksm.plugin.Plugin
+import ksm.plugin.configuration.interceptor.ConfigurationInterceptor
+import ksm.plugin.configuration.interceptor.addConfigurationInterceptor
 
 public object AwaitPlugin : Plugin.Singleton<AwaitPlugin> {
 

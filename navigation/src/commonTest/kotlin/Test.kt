@@ -1,4 +1,4 @@
-import ksm.annotation.LibraryConstructor
+import ksm.annotation.LibraryApi
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
 import ksm.configuration.interceptor.ConfigurationInterceptor
@@ -7,16 +7,16 @@ import ksm.lifecycle.interceptor.LifecycleInterceptor
 import ksm.lifecycle.addLifecycleInterceptor
 import ksm.navigation.state.name.name
 import ksm.navigation.state.navigate
-import ksm.navigation.navigationStateController
+import ksm.navigation.navigationRuntime
 import ksm.plugin.Plugin
 import kotlin.test.Test
 
 class KsmTest {
 
-    @OptIn(LibraryConstructor::class)
+    @OptIn(LibraryApi::class)
     @Test
     fun ksmTest() {
-        val controller = navigationStateController {
+        val controller = navigationRuntime {
             install(PrintPlugin)
         }
         controller.navigate("Start")

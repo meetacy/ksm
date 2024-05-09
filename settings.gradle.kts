@@ -28,10 +28,11 @@ includeBuild("build-logic")
 
 include(
     "core",
+    "plugin",
     "kotlinx-coroutines",
     "navigation",
     "navigation:navigation-compose",
-    "navigation:navigation-ktgbotapi",
+//    "navigation:navigation-ktgbotapi",
     "navigation:navigation-mdi",
     "navigation:navigation-kotlinx-json",
     "viewmodel"

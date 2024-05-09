@@ -3,10 +3,10 @@ package ksm.kotlinx.serialization.plugin
 import kotlinx.serialization.json.Json
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.context.install
 import ksm.navigation.serialization.BaseSerializationStore
 import ksm.navigation.serialization.plugin.BaseSerializationPlugin
 import ksm.plugin.Plugin
+import ksm.plugin.install
 
 public class KotlinxSerializationPlugin(
     private val json: Json = Json,

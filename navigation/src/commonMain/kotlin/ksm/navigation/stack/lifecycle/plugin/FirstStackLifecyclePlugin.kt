@@ -2,10 +2,10 @@ package ksm.navigation.stack.lifecycle.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.configuration.interceptor.ConfigurationInterceptor
-import ksm.configuration.interceptor.addConfigurationInterceptor
-import ksm.lifecycle.plugin.LifecyclePlugin
 import ksm.plugin.Plugin
+import ksm.plugin.configuration.interceptor.ConfigurationInterceptor
+import ksm.plugin.configuration.interceptor.addConfigurationInterceptor
+import ksm.plugin.lifecycle.plugin.LifecyclePlugin
 
 // This plugin is installed before any of navigation plugins
 public object FirstStackLifecyclePlugin : Plugin.Singleton<FirstStackLifecyclePlugin> {

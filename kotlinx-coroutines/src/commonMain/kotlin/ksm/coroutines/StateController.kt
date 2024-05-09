@@ -1,7 +1,7 @@
 package ksm.coroutines
 
 import kotlinx.coroutines.CoroutineScope
-import ksm.StateController
+import ksm.plugin.PluginController
 
-public val StateController.scope: CoroutineScope
+public val PluginController.scope: CoroutineScope
     get() = context.scope

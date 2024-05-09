@@ -2,11 +2,7 @@ package ksm.navigation.result.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.configuration.interceptor.ConfigurationInterceptor
-import ksm.configuration.interceptor.addConfigurationInterceptor
-import ksm.context.finish
-import ksm.lifecycle.interceptor.LifecycleInterceptor
-import ksm.lifecycle.addLifecycleInterceptor
+import ksm.finish
 import ksm.navigation.state.navigate
 import ksm.navigation.state.parameters.receiveParameter
 import ksm.navigation.state.parameters.setParameter
@@ -14,6 +10,10 @@ import ksm.plugin.Plugin
 import ksm.navigation.result.NavigatorForResult
 import ksm.navigation.result.NavigationResultHandler
 import ksm.navigation.stack.previousContext
+import ksm.plugin.configuration.interceptor.ConfigurationInterceptor
+import ksm.plugin.configuration.interceptor.addConfigurationInterceptor
+import ksm.plugin.lifecycle.addLifecycleInterceptor
+import ksm.plugin.lifecycle.interceptor.LifecycleInterceptor
 import ksm.typed.TypedValue
 
 public object NavigationResultPlugin : Plugin.Singleton<NavigationResultPlugin> {

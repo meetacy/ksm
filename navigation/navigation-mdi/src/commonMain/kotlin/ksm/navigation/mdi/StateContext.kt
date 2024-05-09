@@ -3,8 +3,6 @@ package ksm.navigation.mdi
 import app.meetacy.di.DI
 import ksm.navigation.mdi.plugin.DIPlugin
 import ksm.context.StateContext
-import ksm.lifecycle.addLifecycleInterceptor
-import ksm.lifecycle.interceptor.LifecycleInterceptor
 import ksm.navigation.mdi.interceptor.DIInterceptor
 import ksm.plugin.plugin
 

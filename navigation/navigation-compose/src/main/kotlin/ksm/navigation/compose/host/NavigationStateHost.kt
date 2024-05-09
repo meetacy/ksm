@@ -6,9 +6,10 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import ksm.StateController
-import ksm.asStateController
+import ksm.navigation.compose.ComposeController
 import ksm.navigation.compose.plugin.ComposePlugin
 import ksm.navigation.state.navigate
+import ksm.plugin.factory.asController
 import ksm.plugin.plugin
 
 @Composable
@@ -25,7 +26,7 @@ public fun NavigationStateHost(
 
         key(currentContext) {
             currentContext ?: return
-            val childController = currentContext.asStateController()
+            val childController: ComposeController = currentContext.asController()
             val content = currentContext.plugin(ComposePlugin).content(currentContext)
             if (content != null) {
                 with (content) {

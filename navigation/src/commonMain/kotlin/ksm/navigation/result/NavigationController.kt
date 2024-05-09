@@ -1,14 +1,14 @@
 package ksm.navigation.result
 
-import ksm.StateController
+import ksm.navigation.NavigationController
 
-public fun <TData, TResult> StateController.registerNavigator(
+public fun <TData, TResult> NavigationController.registerNavigator(
     name: String,
     handler: NavigationResultHandler<TResult>
 ): NavigatorForResult<TData> {
     return context.registerNavigator(name, handler)
 }
 
-public fun StateController.finishWithResult(result: Any?) {
+public fun NavigationController.finishWithResult(result: Any?) {
     context.finishWithResult(result)
 }

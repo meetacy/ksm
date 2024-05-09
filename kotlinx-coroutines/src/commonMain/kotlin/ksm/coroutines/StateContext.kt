@@ -6,7 +6,6 @@ import ksm.coroutines.interceptor.AwaitInterceptor
 import ksm.coroutines.plugin.AwaitPlugin
 import ksm.coroutines.plugin.CoroutinesPlugin
 import ksm.plugin.plugin
-import kotlin.coroutines.CoroutineContext
 
 public val StateContext.scope: CoroutineScope get() {
     return plugin(CoroutinesPlugin).coroutineScope(context = this)

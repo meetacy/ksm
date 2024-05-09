@@ -2,19 +2,19 @@ package ksm.navigation.compose.plugin
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import ksm.StateController
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.configuration.interceptor.ConfigurationInterceptor
-import ksm.configuration.interceptor.addConfigurationInterceptor
-import ksm.lifecycle.interceptor.LifecycleInterceptor
-import ksm.lifecycle.addLifecycleInterceptor
+import ksm.navigation.compose.ComposeController
 import ksm.navigation.compose.wrapper.ComposeWrapper
 import ksm.navigation.compose.interceptor.ComposeInterceptor
 import ksm.navigation.compose.interceptor.plus
 import ksm.navigation.compose.wrapper.toInterceptor
 import ksm.navigation.serialization.BaseSerializationStore
 import ksm.plugin.Plugin
+import ksm.plugin.configuration.interceptor.ConfigurationInterceptor
+import ksm.plugin.configuration.interceptor.addConfigurationInterceptor
+import ksm.plugin.lifecycle.addLifecycleInterceptor
+import ksm.plugin.lifecycle.interceptor.LifecycleInterceptor
 
 public class ComposePlugin(
     private val store: BaseSerializationStore.String,
@@ -56,7 +56,7 @@ public class ComposePlugin(
 
     public fun setContent(
         context: StateContext,
-        content: @Composable StateController.() -> Unit
+        content: @Composable ComposeController.() -> Unit
     ) {
         val entry = context.require(ComposeEntry)
         val interceptor = entry.interceptor
