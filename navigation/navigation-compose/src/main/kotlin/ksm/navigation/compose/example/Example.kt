@@ -3,18 +3,16 @@ package ksm.navigation.compose.example
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import ksm.StateController
 import ksm.navigation.NavigationController
 import ksm.navigation.compose.Content
-import ksm.navigation.compose.host.NavigationStateHost
+import ksm.navigation.compose.host.ComposeStateHost
 import ksm.navigation.compose.rememberComposeController
-import ksm.navigation.state.route.StateRouteScope
-import ksm.navigation.state.route.states
-import ksm.navigation.state.data.receive
-import ksm.navigation.state.name.named
+import ksm.navigation.compose.route.ComposeRouteScope
+import ksm.navigation.compose.route.named
+import ksm.navigation.compose.route.states
 import ksm.navigation.result.*
+import ksm.navigation.state.data.receive
 import ksm.viewmodel.viewModelController
-import ksm.viewmodel.viewModelRuntime
 
 private class MainViewModel {
     val actions: Flow<Action> = emptyFlow()
@@ -40,7 +38,7 @@ private fun AppContent() {
         details()
     }
 
-    NavigationStateHost(
+    ComposeStateHost(
         controller = controller,
         startStateName = MAIN_SCREEN
     )
@@ -52,7 +50,7 @@ private fun NavigationController.registerDetailsNavigator(
     return registerNavigator(DETAILS_SCREEN, handler)
 }
 
-private fun StateRouteScope.main() = named(MAIN_SCREEN) {
+private fun ComposeRouteScope.main() = named(MAIN_SCREEN) {
     Content {
         val launcher = registerDetailsNavigator { itemName ->
             println("Item Picked! $itemName")
@@ -64,7 +62,7 @@ private fun StateRouteScope.main() = named(MAIN_SCREEN) {
     }
 }
 
-private fun StateRouteScope.details() = named(DETAILS_SCREEN) {
+private fun ComposeRouteScope.details() = named(DETAILS_SCREEN) {
     Content {
         val parameters: DetailsParameters = receive()
 
