@@ -4,7 +4,7 @@ import ksm.annotation.LibraryApi
 import ksm.navigation.stack.installStackPlugin
 import ksm.navigation.state.name.installStateName
 import ksm.navigation.state.parameters.installStateParameters
-import ksm.navigation.state.route.installStateRoute
+import ksm.navigation.route.installStateRoute
 import ksm.plugin.factory.StateControllerFactory
 import ksm.plugin.pluginRuntime
 
