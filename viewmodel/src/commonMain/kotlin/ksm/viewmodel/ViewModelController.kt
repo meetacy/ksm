@@ -15,7 +15,7 @@ public interface ViewModelController : PluginController {
     public companion object : StateControllerFactory {
         override val type: KType = typeOf<ViewModelController>()
 
-        override fun wrap(context: StateContext): PluginController {
+        override fun wrap(context: StateContext): ViewModelController {
             return object : ViewModelController { override val context = context }
         }
     }
@@ -32,13 +32,20 @@ public inline fun viewModelController(
 ): ViewModelController {
     val scope = object : ViewModelController.Builder {
         override var context = context
-    }.apply {
-        viewModelRuntime(enableConfiguration, enableLifecycle, enableFinishOnce, enableExceptionHandler)
+    }
+
+    with(scope) {
+        viewModelRuntime(
+            enableConfiguration = enableConfiguration,
+            enableLifecycle = enableLifecycle,
+            enableFinishOnce = enableFinishOnce,
+            enableExceptionHandler = enableExceptionHandler
+        )
         block()
     }
 
     // Calls onConfigure
     val built = scope.context.createChildContext()
 
-    return built.asController()
+    return ViewModelController.wrap(built)
 }
