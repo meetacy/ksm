@@ -1,14 +1,14 @@
 package ksm.navigation.state.name
 
-import ksm.navigation.state.route.StateBuilderScope
-import ksm.navigation.state.route.StateRouteScope
+import ksm.context.StateContext
+import ksm.navigation.route.interceptRoute
 
-public inline fun StateRouteScope.named(
+public inline fun StateContext.interceptNamedRoute(
     string: String,
-    block: StateBuilderScope.() -> Unit
+    block: () -> Unit
 ) {
-    intercept(
-        predicate = { stateRouteContextForFilter.stateNameOrNull == string },
+    interceptRoute(
+        predicate = { stateNameOrNull == string },
         block = block
     )
 }
