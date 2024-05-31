@@ -34,6 +34,7 @@ include(
     "navigation:navigation-compose",
 //    "navigation:navigation-ktgbotapi",
     "navigation:navigation-mdi",
+    "navigation:navigation-react",
     "navigation:navigation-kotlinx-json",
     "viewmodel"
 )

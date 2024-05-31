@@ -13,8 +13,8 @@ import ksm.plugin.factory.asController
 import ksm.plugin.plugin
 
 @Composable
-public fun NavigationStateHost(
-    controller: StateController,
+public fun ComposeStateHost(
+    controller: ComposeController,
     startStateName: String,
     modifier: Modifier = Modifier
 ) {
