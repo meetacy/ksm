@@ -1,44 +1,49 @@
-package ksm.navigation.state.route.plugin
+package ksm.navigation.react.plugin
 
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
-import ksm.navigation.state.route.StateRouteScope
+import ksm.navigation.react.observable.ObservableState
 import ksm.plugin.Plugin
 import ksm.plugin.configuration.interceptor.ConfigurationInterceptor
 import ksm.plugin.configuration.interceptor.addConfigurationInterceptor
 import ksm.plugin.lifecycle.addLifecycleInterceptor
 import ksm.plugin.lifecycle.interceptor.LifecycleInterceptor
+import react.StateInstance
 
-public object StateRoutePlugin : Plugin.Singleton<StateRoutePlugin> {
-    // todo: вынести в StateRouteStateController
-    private var block: (StateRouteScope.() -> Unit)? = null
+public object ReactPlugin : Plugin.Singleton<ReactPlugin> {
 
     @MutateContext
     override fun install(context: StateContext): StateContext {
         context.addConfigurationInterceptor(Configuration)
-        return context
+        return context + ReactStateController()
     }
 
     private object Configuration : ConfigurationInterceptor {
         @MutateContext
         override fun onConfigure(context: StateContext): StateContext {
             context.addLifecycleInterceptor(Lifecycle)
-            return context
+            return context + ReactEntry()
         }
     }
 
     private object Lifecycle : LifecycleInterceptor {
         override fun onCreate(context: StateContext) {
-            val scope = StateRouteScope(context)
-            val block = block ?: error("Please call `states` in StateControllerBuilder")
-            block(scope)
-            if (!scope.intercepted) {
-                error("Cannot launch state because there is no handlers for this")
-            }
+            context.require(ReactStateController).currentContext.value = context
         }
     }
 
-    public fun states(block: StateRouteScope.() -> Unit) {
-        this.block = block
+    public fun setComponent(
+        context: StateContext,
+        component: ReactComponent
+    ) {
+        context.require(ReactEntry).component = component
+    }
+
+    public fun component(context: StateContext): ReactComponent {
+        return context.require(ReactEntry).component ?: error("Please set 'component' in state builder")
+    }
+
+    public fun currentState(context: StateContext): ObservableState<StateContext?> {
+        return context.require(ReactStateController).currentContext
     }
 }
