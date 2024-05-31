@@ -2,6 +2,7 @@ package ksm.navigation.compose.plugin
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import ksm.annotation.LibraryApi
 import ksm.annotation.MutateContext
 import ksm.context.StateContext
 import ksm.navigation.compose.ComposeController

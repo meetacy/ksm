@@ -1,8 +1,8 @@
-package ksm.navigation.state.route
+package ksm.navigation.route
 
 import ksm.annotation.LibraryApi
 import ksm.navigation.NavigationController
-import ksm.navigation.state.route.plugin.StateRoutePlugin
+import ksm.navigation.route.plugin.StateRoutePlugin
 import ksm.plugin.install
 
 @OptIn(LibraryApi::class)
